@@ -1,5 +1,7 @@
 import json
 import os
+import threading
+from http.server import BaseHTTPRequestHandler, HTTPServer
 from datetime import datetime
 from telegram import (
     Update, InlineKeyboardMarkup,
@@ -11,10 +13,6 @@ from telegram.ext import (
     ApplicationBuilder, CommandHandler, MessageHandler,
     CallbackQueryHandler, ContextTypes, filters
 )
-
-TOKEN = "7237844997:AAGknrFJy0Q56PHaWd393eml8S4_Dzjzquw"
-ADMIN_ID = 5364058158
-REVIEW_CHAT_ID = -4855741676
 
 DATA_FILE = "data.json"
 TASKS_FILE = "tasks.json"
@@ -263,7 +261,21 @@ async def save_new_task(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     await сupdate.message.reply_text("✅ Задание добавлено!")
     context.user_data.pop("add_task", None)
+PORT = int(os.environ.get("PORT", 8000))
 
+class Handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(b"Bot is running")
+
+def run_http_server():
+    server = HTTPServer(('', PORT), Handler)
+    print(f"HTTP server running on port {PORT}")
+    server.serve_forever()
+
+# Запускаем HTTP-сервер в отдельном потоке, чтобы он не мешал боту
+threading.Thread(target=run_http_server, daemon=True).start()
 def main():
     app = ApplicationBuilder().token(TOKEN).build()
     app.add_handler(CommandHandler("start", start))
