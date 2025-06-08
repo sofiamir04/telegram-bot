@@ -3,6 +3,7 @@ import os
 import threading
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from datetime import datetime
+from dotenv import load_dotenv
 from telegram import (
     Update, InlineKeyboardMarkup,
     InlineKeyboardButton,
@@ -13,6 +14,9 @@ from telegram.ext import (
     ApplicationBuilder, CommandHandler, MessageHandler,
     CallbackQueryHandler, ContextTypes, filters
 )
+TOKEN = os.getenv("TOKEN")
+ADMIN_ID = int(os.getenv("ADMIN_ID"))
+REVIEW_CHAT_ID = int(os.getenv("REVIEW_CHAT ID"))
 
 DATA_FILE = "data.json"
 TASKS_FILE = "tasks.json"
