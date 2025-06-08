@@ -13,7 +13,7 @@ from telegram.ext import (
 )
 from uuid import uuid4
 
-TOKEN = "7237844997:AAGknrFJy0Q56PHaWd393eml8S4_Dzjzquw"
+TOKEN = "7237844997:AAHN5eyonRKUWSEZqf07HHIVqWzUm8A6gJo"
 ADMIN_ID = 5364058158
 REVIEW_CHAT_ID = -4855741676
 
