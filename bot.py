@@ -268,7 +268,7 @@ async def save_new_task(update: Update, context: ContextTypes.DEFAULT_TYPE):
 def main():
     app = ApplicationBuilder().token(TOKEN).build()
     app.add_handler(CommandHandler("start", start))
-    app.add_handier(CallbackQueryHandler(callback_query_handler))
+    app.add_handler(CallbackQueryHandler(callback_query_handler))
     app.add_handler(MessageHandler(filters.TEXT, handle_text))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, message_handler))
     app.add_handler(MessageHandler(filters.TEXT | filters.PHOTO | filters.Document.ALL, report_handler))
